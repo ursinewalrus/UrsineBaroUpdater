@@ -1,0 +1,6 @@
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\bin\Debug\UrsineBaroDownloader.exe.config
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\bin\Debug\UrsineBaroDownloader.exe
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\bin\Debug\UrsineBaroDownloader.pdb
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\obj\Debug\UrsineBaroDownloader.csproj.CoreCompileInputs.cache
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\obj\Debug\UrsineBaroDownloader.exe
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\obj\Debug\UrsineBaroDownloader.pdb
