@@ -30,6 +30,7 @@ namespace UrsineBaroDownloader
                 FileStream zipFile = new FileStream(@".\downloadedZip.zip", FileMode.Create);
                 zipFile.Write(responseBytes, 0, responseBytes.Length);
                 zipFile.Close();
+                ZipFile.ExtractToDirectory(@".\downloadedZip.zip",@".")
                 ;
 
             }
