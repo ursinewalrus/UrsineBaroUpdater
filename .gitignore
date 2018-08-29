@@ -1,3 +1,5 @@
 *.config
 packages/
 *.lock
+bin/*
+obj/*

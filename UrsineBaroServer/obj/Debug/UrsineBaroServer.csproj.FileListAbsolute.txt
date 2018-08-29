@@ -1,0 +1,14 @@
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\UrsineBaroServer.exe.config
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\UrsineBaroServer.exe
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\UrsineBaroServer.pdb
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\Dropbox.Api.dll
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\Dropbox.Api.xml
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\obj\Debug\UrsineBaroServer.csproj.CoreCompileInputs.cache
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\obj\Debug\UrsineBaroServer.exe
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\obj\Debug\UrsineBaroServer.pdb
+C:\Users\jkerxhalli\Desktop\golf\dropboxTest\UrsineBaroServer.exe.config
+C:\Users\jkerxhalli\Desktop\golf\dropboxTest\UrsineBaroServer.exe
+C:\Users\jkerxhalli\Desktop\golf\dropboxTest\UrsineBaroServer.pdb
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroServer\obj\Debug\UrsineBaroServer.csprojResolveAssemblyReference.cache

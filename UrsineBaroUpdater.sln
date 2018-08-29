@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrsineBaroUpdater", "Ursine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrsineBaroDownloader", "UrsineBaroDownloader\UrsineBaroDownloader.csproj", "{71F0F711-9B60-46D2-B171-D70318B080ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrsineBaroServer", "UrsineBaroServer\UrsineBaroServer.csproj", "{DA1AE6FE-FED5-4C36-95FF-7942FF469A1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{71F0F711-9B60-46D2-B171-D70318B080ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71F0F711-9B60-46D2-B171-D70318B080ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71F0F711-9B60-46D2-B171-D70318B080ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1AE6FE-FED5-4C36-95FF-7942FF469A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1AE6FE-FED5-4C36-95FF-7942FF469A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1AE6FE-FED5-4C36-95FF-7942FF469A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1AE6FE-FED5-4C36-95FF-7942FF469A1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
