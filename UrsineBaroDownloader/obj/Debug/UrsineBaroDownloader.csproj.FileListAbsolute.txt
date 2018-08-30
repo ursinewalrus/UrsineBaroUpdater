@@ -14,3 +14,4 @@ C:\Users\jkerxhalli\Desktop\golf\dropboxTest\UrsineBaroDownloader.pdb
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\Barotrauma\UrsineBaroDownloader.exe.config
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\Barotrauma\UrsineBaroDownloader.exe
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\Barotrauma\UrsineBaroDownloader.pdb
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroDownloader\obj\Debug\UrsineBaroDownloader.csprojResolveAssemblyReference.cache

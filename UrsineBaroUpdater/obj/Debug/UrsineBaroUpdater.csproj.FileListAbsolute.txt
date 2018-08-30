@@ -14,3 +14,4 @@ C:\Users\jkerxhalli\Desktop\golf\dropboxTest\UrsineBaroUpdater.pdb
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\UrsineBaroUpdater.exe.config
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\UrsineBaroUpdater.exe
 C:\Users\jkerxhalli\Desktop\golf\ursinewalrus-BaratraumaFork\UrsineBaroUpdater.pdb
+C:\Users\jkerxhalli\source\repos\UrsineBaroUpdater\UrsineBaroUpdater\obj\Debug\UrsineBaroUpdater.csprojResolveAssemblyReference.cache
