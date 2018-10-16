@@ -11,13 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace UrsineBaroDownloader
 {
 
     class Downloader
     {
-        private static string baseAddress = "http://18.208.175.131/api/baro/";
+        public static string baseAddress = "http://18.208.175.131/api/baro/";
         [STAThread]
         static void Main(string[] args)
         {
@@ -36,7 +37,7 @@ namespace UrsineBaroDownloader
                     List<string> possibleDownloads = responseString.Split('|').ToList();
                     Application.EnableVisualStyles();
                     var selectionForm = new ZipSelectForm(possibleDownloads);
-                    Application.Run(new ZipSelectForm(possibleDownloads));
+                    Application.Run(selectionForm);
                 }
                 catch(Exception e)
                 {
@@ -44,57 +45,21 @@ namespace UrsineBaroDownloader
                 }
             }
         }
-
-        public static void GetSelectedOption(string zipFile)
-        {
-            try
-            {
-                using (var client = new HttpClient(new HttpClientHandler
-                {
-                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-                }))
-                {
-                    client.BaseAddress = new Uri(baseAddress);
-                    HttpResponseMessage response = client.GetAsync("downloadoption?download=" + zipFile).Result;
-                    var responseBytes = response.Content.ReadAsByteArrayAsync().Result;
-                    FileStream downloadedZip = new FileStream(@".\tempFile.zip", FileMode.Create);
-                    downloadedZip.Write(responseBytes, 0, responseBytes.Length);
-                    downloadedZip.Close();
-
-                    using (ZipArchive archive = ZipFile.OpenRead(@".\tempFile.zip"))
-                    {
-                        foreach (ZipArchiveEntry entry in archive.Entries)
-                        {
-                            if (entry.Name == "")
-                                continue;
-                            var splitPath = entry.FullName.Split('/');
-                            var fileDir = string.Join("/", splitPath.Take(splitPath.Length - 1).ToList());
-                            if (!Directory.Exists(fileDir) && fileDir != "")
-                            {
-                                Directory.CreateDirectory(fileDir);
-                            }
-                            fileDir = @".\" + fileDir + @"\";
-                            var extractPath = fileDir + entry.Name;
-                            entry.ExtractToFile(extractPath, true);
-                        }
-                    }
-                    File.Delete(@".\tempFile.zip");
-                }
-
-            }
-            catch(Exception e)
-            {
-                Application.Run(new ShowError(e.Message));
-            }
-        }
-
     }
 
     public class ZipSelectForm : Form
     {
         public List<string> FormOptions;
+        public BackgroundWorker ProgressWorker = new BackgroundWorker();
+        public ProgressBar ProgressBar = new ProgressBar();
+
+
         public ZipSelectForm(List<string> zipFiles)
         {
+            ProgressWorker.WorkerReportsProgress = true;
+            ProgressWorker.ProgressChanged += ProgressUpdater;
+            ProgressWorker.DoWork += ExtractFiles;
+
             zipFiles = zipFiles.Select(s => s.Substring(1, s.Length - 2)).ToList();
             FormOptions = zipFiles;
             int yLoc = 0;
@@ -109,10 +74,63 @@ namespace UrsineBaroDownloader
                 yLoc += 90;
             }
         }
+        public void ProgressUpdater(object sender, ProgressChangedEventArgs e) {
+               ProgressBar.Maximum = 100;
+               ProgressBar.Minimum = 0;
+               ProgressBar.Value = e.ProgressPercentage;
+        }
 
-        public static void OptionSelect(object sender, EventArgs e)
+        public void GetSelectedOption(string zipFile)
         {
-            Downloader.GetSelectedOption((sender as Button).Text);
+            try
+            {
+                using (var client = new HttpClient(new HttpClientHandler
+                {
+                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                }))
+                {
+                    client.BaseAddress = new Uri(Downloader.baseAddress);
+                    HttpResponseMessage response = client.GetAsync("downloadoption?download=" + zipFile).Result;
+                    var responseBytes = response.Content.ReadAsByteArrayAsync().Result;
+                    FileStream downloadedZip = new FileStream(@".\tempFile.zip", FileMode.Create);
+                    downloadedZip.Write(responseBytes, 0, responseBytes.Length);
+                    downloadedZip.Close();
+
+                    ExtractFiles();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Application.Run(new ShowError(e.Message));
+            }
+        }
+
+        private void ExtractFiles()
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(@".\tempFile.zip"))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    if (entry.Name == "")
+                        continue;
+                    var splitPath = entry.FullName.Split('/');
+                    var fileDir = string.Join("/", splitPath.Take(splitPath.Length - 1).ToList());
+                    if (!Directory.Exists(fileDir) && fileDir != "")
+                    {
+                        Directory.CreateDirectory(fileDir);
+                    }
+                    fileDir = @".\" + fileDir + @"\";
+                    var extractPath = fileDir + entry.Name;
+                    entry.ExtractToFile(extractPath, true);
+                }
+            }
+            File.Delete(@".\tempFile.zip");
+        }
+
+        public void OptionSelect(object sender, EventArgs e)
+        {
+            GetSelectedOption((sender as Button).Text);
         }
 
     }
