@@ -1,17 +1,14 @@
-﻿using Dropbox.Api;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
+
 
 namespace UrsineBaroDownloader
 {
@@ -52,18 +49,31 @@ namespace UrsineBaroDownloader
         public List<string> FormOptions;
         public BackgroundWorker ProgressWorker = new BackgroundWorker();
         public ProgressBar ProgressBar = new ProgressBar();
-
+        public Label ProgressText = new Label();
+        public Label DownloadingText = new Label();
 
         public ZipSelectForm(List<string> zipFiles)
         {
-            ProgressWorker.WorkerReportsProgress = true;
-            ProgressWorker.ProgressChanged += ProgressUpdater;
-            ProgressWorker.DoWork += ExtractFiles;
+            DownloadingText.Text = "Downloading Files";
+            DownloadingText.Location = new Point(30, 10);
+            DownloadingText.Size = new Size(200, 20);
 
             zipFiles = zipFiles.Select(s => s.Substring(1, s.Length - 2)).ToList();
             FormOptions = zipFiles;
-            int yLoc = 0;
-            foreach(string option in FormOptions)
+
+            ProgressWorker.DoWork += (se, eventArgs) => { ExtractFiles(); };
+
+            ProgressText.Location = new Point(30, 50);
+            ProgressText.Size = new Size(200, 20);
+            ProgressText.Text = "Extract Files Progress";
+            this.Controls.Add(ProgressText);
+
+            ProgressBar.Location = new Point(30, 70);
+            ProgressBar.Size = new Size(200, 20);
+            this.Controls.Add(ProgressBar);
+
+            int yLoc = 70;
+            foreach (string option in FormOptions)
             {
                 var button = new Button();
                 button.Size = new Size(200, 60);
@@ -75,9 +85,9 @@ namespace UrsineBaroDownloader
             }
         }
         public void ProgressUpdater(object sender, ProgressChangedEventArgs e) {
-               ProgressBar.Maximum = 100;
-               ProgressBar.Minimum = 0;
-               ProgressBar.Value = e.ProgressPercentage;
+            ProgressBar.Maximum = 100;
+            ProgressBar.Minimum = 0;
+            ProgressBar.Value = e.ProgressPercentage;
         }
 
         public void GetSelectedOption(string zipFile)
@@ -90,13 +100,19 @@ namespace UrsineBaroDownloader
                 }))
                 {
                     client.BaseAddress = new Uri(Downloader.baseAddress);
+
+                    this.Controls.Add(DownloadingText);
                     HttpResponseMessage response = client.GetAsync("downloadoption?download=" + zipFile).Result;
+                    DownloadingText.Text = "Downloaded!";
+                    this.Controls.Remove(DownloadingText);
+
                     var responseBytes = response.Content.ReadAsByteArrayAsync().Result;
                     FileStream downloadedZip = new FileStream(@".\tempFile.zip", FileMode.Create);
                     downloadedZip.Write(responseBytes, 0, responseBytes.Length);
                     downloadedZip.Close();
 
                     ExtractFiles();
+                    ProgressText.Text = "Extraction Complete!";
                 }
 
             }
@@ -106,12 +122,22 @@ namespace UrsineBaroDownloader
             }
         }
 
+
         private void ExtractFiles()
         {
+            ProgressWorker.WorkerReportsProgress = true;
+            ProgressWorker.ProgressChanged += ProgressUpdater;
+
             using (ZipArchive archive = ZipFile.OpenRead(@".\tempFile.zip"))
             {
+                int totalSize = archive.Entries.ToList().Sum(f => (int)f.Length);
+                double totalDone = 0;
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
+                    int percentage = (int)(((totalDone += entry.Length) / totalSize) * 100);
+
+                    ProgressWorker.ReportProgress(percentage, "Working");
+
                     if (entry.Name == "")
                         continue;
                     var splitPath = entry.FullName.Split('/');
@@ -126,6 +152,7 @@ namespace UrsineBaroDownloader
                 }
             }
             File.Delete(@".\tempFile.zip");
+
         }
 
         public void OptionSelect(object sender, EventArgs e)
